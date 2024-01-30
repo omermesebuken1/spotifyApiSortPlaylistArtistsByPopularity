@@ -41,7 +41,7 @@ public class SpotifyApiExample {
         }
     }
 
-    public static String accessToken = ""; // Bearer Token here
+    public static String accessToken = "Bearer BQAcT2gRIvGx1l1E4eqMJdxtPfHw6HW_qwTaYQxm1P78DU2TqAXUZ4LdcALjXvWDOeQIL3sjjUoTFdlZYbpjT5N4n__gRL-tC-9IIc7bg-g9vXPXEP4YZ_MyKCOLpn-X2XE_0apq5wMxtyvI3rYjz6SDoiodZ-pp1Qo5WDEffg3Wi6OMIgNoTBFsJ0cqjpJIOwzldn_No1-UCVLyfFNE6am4DF_C5S2thnMZLf3l5Alv011fE83lGs8W1Ng5QQ"; // Bearer Token here
     public static String playlistID = "5oNL0OVx3sxzJ15uxd7HbU";
 
     public static void main(String[] args) {
@@ -61,9 +61,13 @@ public class SpotifyApiExample {
             }
 
         }
+        System.out.println("Total Unic Artists Count: " + artistOfPlaylist.size());
 
         artistOfPlaylist.sort(Comparator.comparing(Artist::getPopularity).reversed());
 
+        System.out.println();
+        System.out.println();
+        System.out.println();
 
         for (Artist art : artistOfPlaylist) {
             System.out.println("Popularity: " + art.getPopularity() + " \t" + " Artist: " + art.getName());
@@ -78,10 +82,13 @@ public class SpotifyApiExample {
                 .contentType(ContentType.JSON)
                 .get();
 
+
+
         JsonPath jsonPath = response.jsonPath();
         String artistName = jsonPath.getString("name");
         double artistPopularity = jsonPath.getDouble("popularity");
 
+        System.out.println(artistName);
 
         int newPop = (int) Math.round(artistPopularity);
 
@@ -97,6 +104,8 @@ public class SpotifyApiExample {
                 .header("Authorization", accessToken)
                 .contentType(ContentType.TEXT)
                 .get();
+
+        System.out.println("Response Status Code: " + response.getStatusCode());
 
         //System.out.println("Response Body: " + response.getBody().asString());
         return getArtistsURIs(response);
@@ -119,6 +128,8 @@ public class SpotifyApiExample {
                 artistURIs.add(artistId);
             }
         }
+
+        System.out.println("Total Artists Count: " + artistURIs.size());
 
         return artistURIs;
     }
